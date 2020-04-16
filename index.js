@@ -8,7 +8,7 @@ mongoose.connect(key.mongoURI, {
 });
 
 app.get('/', (req, res) => {
-   res.send({hi: 'dude'})
+   res.send({hi: 'bro'})
 });
 
 const PORT = process.env.PORT || 5000;
