@@ -1,5 +1,11 @@
 const express = require('express');
+const mongoose = require('mongoose');
+const key = require('./config/key');
 const app = express();
+
+mongoose.connect(key.mongoURI, {
+   useNewUrlParser: true
+});
 
 app.get('/', (req, res) => {
    res.send({hi: 'dude'})
