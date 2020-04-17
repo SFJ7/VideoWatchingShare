@@ -6,7 +6,7 @@ const auth = require('../middleware/auth');
 //@desc     Send user to feed if logged in, if not redirect to login
 //@access   Private
 router.get('/',
-    // auth,
+    auth,
     (req, res) => {
     res.send('Feed')
 });
