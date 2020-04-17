@@ -13,11 +13,10 @@ mongoose.connect(key.mongoURI, {
 //init middleware
 app.use(express.json({extended: false}));
 
-app.get('/', (req, res) => {
-   res.send({hi: 'bro'})
-});
 
 //Define routes
+app.use('/', require('./routes/api/feed'));
+app.use('/api/login', require('./routes/api/login'));
 app.use('/api/users', require('./routes/api/users'));
 app.use('/api/auth', require('./routes/api/auth'));
 app.use('/api/feed', require('./routes/api/feed'));

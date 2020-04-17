@@ -12,7 +12,6 @@ const User = require('../../models/User');
 //@access   Private
 router.get('/me', auth, async (req, res) => {
     try {
-        console.log(req.user);
         const profile = await Profile.findOne({user: req.user.id})
                                      .populate('user', ['name']);
         if (!profile) {
@@ -21,7 +20,6 @@ router.get('/me', auth, async (req, res) => {
         }
         res.json(profile);
     } catch (e) {
-        console.error(e.message);
         res.status(500)
            .send('Server Error');
     }
@@ -104,7 +102,6 @@ router.get('/', async (req, res) => {
 //@access   Private
 router.get('/all', auth, async (req, res) => {
     try {
-        console.log(req.user);
         const profiles = await Profile.find({user:{$ne:req.user.id}}).limit(20).populate('user', ['name']);
 
         return res.json(profiles)
