@@ -1,7 +1,17 @@
 import React from 'react';
-import {Link} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {logout} from "../actions/authAction";
 
 const Navbar = () => {
+    const dispatch = useDispatch();
+    const {isAuthenticated} = useSelector(state => state.authReducer);
+
+    const logoutHandler = () => {
+        dispatch(logout());
+        return <Redirect to='/' />
+    };
+
     return (
         //Top nav bar
         <>
@@ -52,11 +62,13 @@ const Navbar = () => {
                                         <i className="ri-group-line"/>
                                     </Link>
                                 </li>
+                                {isAuthenticated &&
                                 <li className='nav-item'>
-                                    <Link to='/friends' className='search-toggle iq-waves-effect'>
+                                    <a onClick={logoutHandler} className='search-toggle iq-waves-effect'>
                                         <i className="ri-login-box-line ml-2"/>
-                                    </Link>
+                                    </a>
                                 </li>
+                                }
                             </ul>
                         </div>
                     </nav>

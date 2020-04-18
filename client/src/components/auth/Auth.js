@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import {useDispatch} from "react-redux";
+import {Redirect} from 'react-router-dom';
+import {useDispatch, useSelector} from "react-redux";
 import * as authAction from '../../actions/authAction';
 
 const Auth = () => {
@@ -11,6 +12,7 @@ const Auth = () => {
     const {email, password} = formDataExceptUsername;
     const [userName, setUsername] = useState('')
 
+    const isAuthenticated = useSelector(state => state.authReducer.isAuthenticated);
     const dispatch = useDispatch();
 
     const authStateHandler = () => {
@@ -27,10 +29,14 @@ const Auth = () => {
 
     const authHandler = async (event) => {
         if (event.target.name === 'login') {
-
+            dispatch(authAction.login(formDataExceptUsername.email, formDataExceptUsername.password))
         } else {
             dispatch(authAction.register(userName, formDataExceptUsername.email, formDataExceptUsername.password))
         }
+    }
+
+    if (isAuthenticated) {
+        return <Redirect to='/feed' />
     }
 
     return (
