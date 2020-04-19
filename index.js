@@ -25,16 +25,17 @@ app.use('/api/profile', require('./routes/api/profile'));
 app.use('/api/comments', require('./routes/api/comments'));
 
 if (process.env.NODE_ENV === 'production') {
-   //Express serves up production assets
-   app.use(express.static('client/build'));
-
    //Express will serve up the index.html file if it doesn't recognize the route
    const path = require('path');
-   app.get('*', (req, res) => {
-      res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-   })
+   app.use(express.static(path.join(__dirname, './client/build')))
 
-   // app.use('*', express.static(path.join(__dirname, "server", "client", "build", 'index.html')))
+   app.get('*', function(_, res) {
+      res.sendFile(path.join(__dirname, './client/build/index.html'), function(err) {
+         if (err) {
+            res.status(500).send(err)
+         }
+      })
+   })
 }
 
 const PORT = process.env.PORT || 5000;
