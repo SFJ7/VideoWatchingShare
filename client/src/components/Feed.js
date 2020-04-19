@@ -56,9 +56,11 @@ const Feed = () => {
     }
 
     const renderComments = (userId) => {
-        if (userId !== null)
+        let id;
+        if (userId !== null) {
+            id = userId
+        }
             return comments.map(comment => {
-                // updateCommentState(comment._id);
                 return (
                     <div key={comment._id} className='col-sm-12'>
                         <div className='iq-card iq-card-block iq-card-stretch iq-card-height'>
@@ -93,15 +95,16 @@ const Feed = () => {
                                                     <div className='like-data'>
                                                         <div className='dropdown'>
                                                         <span className='dropdown-toggle'>
-                                                            {comment.likes.length > 0
+                                                            {id ?
+                                                                comment.likes.length > 0
                                                                 ?
                                                                 <i className={comment.likes.filter(like => like.user
-                                                                    === userId._id).length > 0 ? 'ri-thumb-up-fill' +
+                                                                    === id._id).length > 0 ? 'ri-thumb-up-fill' +
                                                                     ' text-primary' : 'ri-thumb-up-fill'} onClick={event => likeChangeHandler(event, comment._id)}/>
                                                                 :
                                                                 <i className='ri-thumb-up-fill' onClick={event => likeChangeHandler(event, comment._id)}/>
+                                                                : <i className='ri-thumb-up-fill' />
                                                             }
-
                                                         </span>
                                                         </div>
                                                     </div>
