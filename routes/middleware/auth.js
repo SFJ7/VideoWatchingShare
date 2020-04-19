@@ -6,9 +6,9 @@ module.exports = function (req, res, next) {
     const token = req.header('x-auth-token');
 
     //Check if no token
-    if (!token) {
-        res.redirect('/api/login');
-    }
+    // if (!token) {
+    //     res.redirect('/');
+    // }
 
     try {
         const decoded = jwt.verify(token, key.jwtSecret);

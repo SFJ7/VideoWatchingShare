@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 import {addComment} from "../actions/commentsAction";
 
 const SingleComment = () => {
-    const {user, isAuthenticated} = useSelector(state => state.authReducer);
+    const authState = useSelector(state => state.authReducer);
 
     const [formData, setFormData] = useState({
         text: '',
@@ -29,7 +29,7 @@ const SingleComment = () => {
 
     return (
         <>
-            {isAuthenticated &&
+            {authState.isAuthenticated &&
             <div className="col-sm-12">
                 <div id="post-modal-data" className="iq-card iq-card-block iq-card-stretch iq-card-height">
                     <div className="iq-card-header d-flex justify-content-between">
@@ -41,7 +41,8 @@ const SingleComment = () => {
                         <div className="d-flex align-items-center">
                             <div className="user-img">
                                 <Link
-                                    to={`/profile/${user._id}`}>
+                                    // ${authState.user._id}
+                                    to={`/profile/`}>
                                     <img className='avatar-60 rounded-circle'
                                          src='https://i.pinimg.com/originals/a3/9d/e1/a39de166cf1b83d8438a6f1b86279604.png'
                                          alt='profile'/>
