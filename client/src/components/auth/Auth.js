@@ -51,7 +51,7 @@ const Auth = () => {
                                 {!isLoggingIn &&
                                 <div className="form-group">
                                     <label htmlFor="exampleInputEmail1">Username</label>
-                                    <input type="email" className="form-control mb-0" id="exampleInputEmail1"
+                                    <input type="text" className="form-control mb-0" id="exampleInputEmail1"
                                            placeholder="Show Watcher" onChange={userNameChangeHandler} value={userName} required={!isLoggingIn}/>
                                 </div>
                                 }
