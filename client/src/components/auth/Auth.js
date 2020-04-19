@@ -36,7 +36,7 @@ const Auth = () => {
     }
 
     if (isAuthenticated) {
-        return <Redirect to='/feed' />
+        return <Redirect to='/' />
     }
 
     return (

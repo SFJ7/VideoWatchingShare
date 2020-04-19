@@ -40,12 +40,20 @@ router.post('/', [
             episode = '';
         }
 
+        let season;
+        if (req.body.season) {
+            season = req.body.season;
+        } else {
+            season = '';
+        }
+
         const newComment = new Comment({
             text: req.body.text,
             name: user.name,
             user: req.user.id,
             show: req.body.show,
-            episode: episode
+            episode: episode,
+            season: season
         });
 
         const comment = await newComment.save();

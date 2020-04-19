@@ -46,7 +46,6 @@ export default function (state = initialState, action) {
                 loading: false
             }
         case USER_LOADED:
-            alert('authenticated is running')
             return {
                 ...state,
                 isAuthenticated: true,

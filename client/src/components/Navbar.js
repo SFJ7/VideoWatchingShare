@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link, Redirect} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {logout} from "../actions/authAction";
 
@@ -9,7 +9,6 @@ const Navbar = () => {
 
     const logoutHandler = () => {
         dispatch(logout());
-        return <Redirect to='/' />
     };
 
     return (
@@ -62,12 +61,18 @@ const Navbar = () => {
                                         <i className="ri-group-line"/>
                                     </Link>
                                 </li>
-                                {isAuthenticated &&
+                                {isAuthenticated ?
                                 <li className='nav-item'>
                                     <a onClick={logoutHandler} className='search-toggle iq-waves-effect'>
-                                        <i className="ri-login-box-line ml-2"/>
+                                        <i className="ri-logout-box-line ml-2"/>
                                     </a>
                                 </li>
+                                    :
+                                    <li className='nav-item'>
+                                        <Link to='/auth' className='search-toggle iq-waves-effect'>
+                                            <i className="ri-login-box-fill ml-2"/>
+                                        </Link>
+                                    </li>
                                 }
                             </ul>
                         </div>

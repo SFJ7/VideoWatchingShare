@@ -16,8 +16,8 @@ const App = () => {
 
     return (
         <BrowserRouter>
-            <Route exact path='/' component={Auth}/>
-            <Route exact path='/feed' component={Feed}/>
+            <Route exact path='/' component={Feed}/>
+            <Route exact path='/auth' component={Auth}/>
         </BrowserRouter>
     );
 }

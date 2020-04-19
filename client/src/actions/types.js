@@ -5,3 +5,7 @@ export const AUTH_ERROR = 'AUTH_ERROR';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAIL = 'LOGIN_FAIL';
 export const LOGOUT = 'LOGOUT';
+export const GET_COMMENTS = 'GET_COMMENTS';
+export const COMMENT_ERROR = 'COMMENT_ERROR';
+export const UPDATE_LIKES = 'UPDATE_LIKES';
+export const ADD_COMMENT = 'ADD_COMMENT';
