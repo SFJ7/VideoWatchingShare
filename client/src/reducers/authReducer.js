@@ -5,7 +5,7 @@ import {
     AUTH_ERROR,
     LOGIN_FAIL,
     LOGIN_SUCCESS,
-    LOGOUT
+    LOGOUT, REMOVE_ERROR_MESSAGES
 } from "../actions/types";
 
 const initialState = {
@@ -55,6 +55,11 @@ export default function (state = initialState, action) {
                 isAuthenticated: true,
                 loading: false,
                 user: payload,
+                msg: null
+            }
+        case REMOVE_ERROR_MESSAGES:
+            return {
+                ...state,
                 msg: null
             }
         default:

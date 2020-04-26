@@ -22,7 +22,6 @@ router.post('/', [
         .equals('true')
 ], async (req, res) => {
     const errors = validationResult(req);
-    console.log(req.body.acceptedAgreement)
     if (!errors.isEmpty()) {
         return res.status(400)
                   .json({error: errors.array()});
@@ -70,7 +69,7 @@ router.post('/', [
                 res.json({token});
             });
     } catch (e) {
-        console.error(e.message);
+        // console.error(e.message);
         res.status(500)
            .send('Server err')
     }

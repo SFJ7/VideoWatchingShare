@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {Redirect} from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
 import * as authAction from '../../actions/authAction';
+import {removeAuthErrors} from "../../actions/authAction";
 
 const Auth = () => {
     const [isLoggingIn, setIsLogginIn] = useState(true);
@@ -11,14 +12,17 @@ const Auth = () => {
         acceptedAgreement: ''
     });
     const {email, password} = formDataExceptUsername;
-    const [userName, setUsername] = useState('')
+    const [userName, setUsername] = useState('');
 
     const {isAuthenticated, msg} = useSelector(state => state.authReducer);
     const dispatch = useDispatch();
 
     const authStateHandler = () => {
+        dispatch(removeAuthErrors());
+        setFormDataExceptUsername({email: '', password: '', acceptedAgreement: ''});
+        setUsername('');
         setIsLogginIn(!isLoggingIn);
-    }
+    };
 
     const formDataExceptUserNameChangeHandler = (event) => {
         setFormDataExceptUsername({...formDataExceptUsername, [event.target.name]: event.target.name === 'acceptedAgreement' ? event.target.checked.toString() : event.target.value})
@@ -32,7 +36,6 @@ const Auth = () => {
         if (event.target.name === 'login') {
             dispatch(authAction.login(formDataExceptUsername.email, formDataExceptUsername.password))
         } else {
-            console.log(formDataExceptUsername);
             dispatch(authAction.register(userName, formDataExceptUsername.email, formDataExceptUsername.password, formDataExceptUsername.acceptedAgreement));
 
         }
@@ -85,6 +88,7 @@ const Auth = () => {
                                     </div> :
                                     <div className="d-inline-block w-100">
                                         <div className="custom-control custom-checkbox d-inline-block mt-2 pt-1"/>
+                                        {msg && msg.find(msg => msg.msg === "Invalid credentials") ? <span className='text-danger'>{msg[0].msg}</span> : null}
                                         <button type='button' name='login' onClick={e => authHandler(e)} className="btn btn-primary float-right">Log In</button>
                                     </div>
                                 }

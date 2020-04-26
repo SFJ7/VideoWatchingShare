@@ -1,5 +1,14 @@
 import axios from 'axios';
-import {AUTH_ERROR, LOGIN_FAIL, LOGIN_SUCCESS, REGISTER_FAIL, REGISTER_SUCCESS, USER_LOADED, LOGOUT} from "./types";
+import {
+    AUTH_ERROR,
+    LOGIN_FAIL,
+    LOGIN_SUCCESS,
+    REGISTER_FAIL,
+    REGISTER_SUCCESS,
+    USER_LOADED,
+    LOGOUT,
+    REMOVE_ERROR_MESSAGES
+} from "./types";
 import setAuthToken from "../util/setAuthToken";
 
 export const loadUser = () => async dispatch => {
@@ -12,7 +21,10 @@ export const loadUser = () => async dispatch => {
                 payload: res.data
             })
         } catch (e) {
-            dispatch({type: AUTH_ERROR});
+            dispatch({
+                type: AUTH_ERROR,
+                payload: e.response.data.error
+            });
         }
     }
 };
@@ -67,7 +79,8 @@ export const login = (email, password) => async dispatch => {
         dispatch(loadUser());
     } catch (e) {
         dispatch({
-            type: LOGIN_FAIL
+            type: LOGIN_FAIL,
+            payload: e.response.data.errors
         })
     }
 }
@@ -75,3 +88,7 @@ export const login = (email, password) => async dispatch => {
 export const logout = () => dispatch => {
     dispatch({type: LOGOUT})
 }
+
+export const removeAuthErrors = () => dispatch => {
+    dispatch({type: REMOVE_ERROR_MESSAGES})
+};
