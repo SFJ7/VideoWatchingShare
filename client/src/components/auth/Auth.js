@@ -7,12 +7,13 @@ const Auth = () => {
     const [isLoggingIn, setIsLogginIn] = useState(true);
     const [formDataExceptUsername, setFormDataExceptUsername] = useState({
         email: '',
-        password: ''
+        password: '',
+        acceptedAgreement: ''
     });
     const {email, password} = formDataExceptUsername;
     const [userName, setUsername] = useState('')
 
-    const isAuthenticated = useSelector(state => state.authReducer.isAuthenticated);
+    const {isAuthenticated, msg} = useSelector(state => state.authReducer);
     const dispatch = useDispatch();
 
     const authStateHandler = () => {
@@ -20,7 +21,7 @@ const Auth = () => {
     }
 
     const formDataExceptUserNameChangeHandler = (event) => {
-        setFormDataExceptUsername({...formDataExceptUsername, [event.target.name]: event.target.value})
+        setFormDataExceptUsername({...formDataExceptUsername, [event.target.name]: event.target.name === 'acceptedAgreement' ? event.target.checked.toString() : event.target.value})
     };
 
     const userNameChangeHandler = (event) => {
@@ -31,7 +32,9 @@ const Auth = () => {
         if (event.target.name === 'login') {
             dispatch(authAction.login(formDataExceptUsername.email, formDataExceptUsername.password))
         } else {
-            dispatch(authAction.register(userName, formDataExceptUsername.email, formDataExceptUsername.password))
+            console.log(formDataExceptUsername);
+            dispatch(authAction.register(userName, formDataExceptUsername.email, formDataExceptUsername.password, formDataExceptUsername.acceptedAgreement));
+
         }
     }
 
@@ -53,32 +56,36 @@ const Auth = () => {
                                     <label htmlFor="exampleInputEmail1">Username</label>
                                     <input type="text" className="form-control mb-0" id="exampleInputEmail1"
                                            placeholder="Show Watcher" onChange={userNameChangeHandler} value={userName} required={!isLoggingIn}/>
+                                        {msg && msg.find(msg => msg.param === "name") ? <span className='text-danger'>{msg.find(msg => msg.param === "name").msg}</span> : null}
                                 </div>
                                 }
                                 <div className="form-group">
                                     <label htmlFor="exampleInputEmail2">Email address</label>
                                     <input type="email" className="form-control mb-0" id="exampleInputEmail2"
                                            placeholder="example@email.com" name='email' onChange={e => formDataExceptUserNameChangeHandler(e)} value={email} required/>
+                                    {msg && msg.find(msg => msg.param === "email") ? <span className='text-danger'>{msg.find(msg => msg.param === "email").msg}</span> : null}
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="exampleInputPassword1">Password</label>
                                     <input type="password" className="form-control mb-0" id="exampleInputPassword1"
                                            placeholder="Password" name='password' onChange={e => formDataExceptUserNameChangeHandler(e)} value={password} required/>
+                                    {msg && msg.find(msg => msg.param === "password") ? <span className='text-danger'>{msg.find(msg => msg.param === "password").msg}</span> : null}
                                 </div>
 
                                 {!isLoggingIn ?
                                     <div className="d-inline-block w-100">
                                         <div className="custom-control custom-checkbox d-inline-block mt-2 pt-1">
-                                            <input type="checkbox" className="custom-control-input" id="customCheck1"/>
+                                            <input type="checkbox" name='acceptedAgreement' onChange={e => formDataExceptUserNameChangeHandler(e)} className="custom-control-input" id="customCheck1"/>
                                             <label className="custom-control-label" htmlFor="customCheck1">I accept that
                                                 this is
-                                                not a finished product</label>
+                                                not a finished product</label><br />
+                                            {msg && msg.find(msg => msg.param === "acceptedAgreement") ? <span className='text-danger'>{msg.find(msg => msg.param === "acceptedAgreement").msg}</span> : null}
                                         </div>
                                         <button type='button' name='signup' onClick={e => authHandler(e)} className="btn btn-primary float-right">Sign Up</button>
                                     </div> :
                                     <div className="d-inline-block w-100">
                                         <div className="custom-control custom-checkbox d-inline-block mt-2 pt-1"/>
-                                        <button type='button' name='login'  onClick={e => authHandler(e)} className="btn btn-primary float-right">Log In</button>
+                                        <button type='button' name='login' onClick={e => authHandler(e)} className="btn btn-primary float-right">Log In</button>
                                     </div>
                                 }
 

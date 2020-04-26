@@ -11,18 +11,21 @@ const User = require('../../models/User');
 //@desc     Register user
 //@access   Public
 router.post('/', [
-    check('name', 'Name is required')
+    check('name', 'Username is required')
         .not()
         .isEmpty(),
     check('email', 'Please include a valid email')
         .isEmail(),
-    check('password', 'Please enter a password with 6 or more character')
-        .isLength({min: 6})
+    check('password', 'Please enter a password with 6 or more characters')
+        .isLength({min: 6}),
+    check('acceptedAgreement', 'Please acknowledge that you realize this is a prototype')
+        .equals('true')
 ], async (req, res) => {
     const errors = validationResult(req);
+    console.log(req.body.acceptedAgreement)
     if (!errors.isEmpty()) {
         return res.status(400)
-                  .json({errors: errors.array()});
+                  .json({error: errors.array()});
     }
 
     const {name, email, password} = req.body;

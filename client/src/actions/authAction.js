@@ -17,17 +17,18 @@ export const loadUser = () => async dispatch => {
     }
 };
 
-export const register = (name, email, password) => async dispatch => {
+export const register = (name, email, password, acceptedAgreement) => async dispatch => {
     const config = {
         headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
         }
     }
 
     const body = JSON.stringify({
         name,
         email,
-        password
+        password,
+        acceptedAgreement
     });
 
     try {
@@ -39,7 +40,8 @@ export const register = (name, email, password) => async dispatch => {
         dispatch(loadUser());
     } catch (e) {
         dispatch({
-            type: REGISTER_FAIL
+            type: REGISTER_FAIL,
+            payload: e.response.data.error
         })
     }
 }
